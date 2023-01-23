@@ -1,53 +1,65 @@
 package com.naveenautomation.Pages;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import com.naveenautomation.Base.TestBase;
+import com.naveenautomation.Browsers.ProxyDriver;
 
-public class MyAccountInformationPage extends TestBase {
+public class MyAccountInformationPage extends Page {
 
-	public MyAccountInformationPage() {
-		PageFactory.initElements(driver, this);
+	
+
+	public MyAccountInformationPage(WebDriver wd, boolean waitForPageToLoad) {
+		super(wd, waitForPageToLoad);
 	}
+	
+	private static final String PAGE_URL="account/edit";
 
-	@FindBy(id = "input-firstname")
-	WebElement firstNameInputField;
+	public static  By firstNameInputField = By.id("input-firstname");
+	public static  By lastNameInputField = By.id("input-lastname");
+	public static  By emailInputField = By.id("input-email");
+	public static  By telephoneInputField = By.id("input-telephone");
+	public static  By continueBtn = By.cssSelector("input[type='Submit']");
 	
-	@FindBy(id = "input-lastname")
-	WebElement lastNameInputField;
-	
-	@FindBy(id = "input-email")
-	WebElement emailInputField;
-	
-	@FindBy(id = "input-telephone")
-	WebElement telephoneInputField;
-
-	@FindBy(css = "input[type='Submit']")
-	WebElement continueBtn;
 
 	private void changingPhoneNumber(String phoneNum) {
-		telephoneInputField.clear();
-		telephoneInputField.sendKeys(phoneNum);
+		((ProxyDriver)wd).clear(telephoneInputField);
+		((ProxyDriver)wd).sendKeys(telephoneInputField, phoneNum);;
 	}
 
 	public MyAccountPage clickContinueAfterUpdatingPhoneNumber(String phoneNum) {
 		changingPhoneNumber(phoneNum);
-		continueBtn.submit();
-		return new MyAccountPage();
-	}
+		((ProxyDriver)wd).submit(continueBtn);
+		return new MyAccountPage(wd,true);
+	} 
 
 	public String getAttributeValueOfFirstName() {
-		return firstNameInputField.getAttribute("value");
+	return	((ProxyDriver)wd).getAttributeValue(firstNameInputField);
+		//return firstNameInputField.getAttribute("value");
 	}
 	public String getAttributeValueOfLastName() {
-		return lastNameInputField.getAttribute("value");
+		return	((ProxyDriver)wd).getAttributeValue(lastNameInputField);
+		//return lastNameInputField.getAttribute("value");
 	}
 	public String getAttributValueOfEmailID() {
-		return emailInputField.getAttribute("value");
+		return	((ProxyDriver)wd).getAttributeValue(emailInputField);
+		//return emailInputField.getAttribute("value");
 	}
 	public String getAttributeValueOfTelephone() {
-		return telephoneInputField.getAttribute("value");
+		return	((ProxyDriver)wd).getAttributeValue(telephoneInputField);
+		//return telephoneInputField.getAttribute("value");
+	}
+	
+	@Override
+	protected void isLoaded() {
+
+		if(!urlContains(wd.getCurrentUrl())) {
+			throw new Error();
+		}
+	}
+	
+	@Override
+	protected String getPageUrl() {
+		return getDomain() + PAGE_URL;
 	}
 }

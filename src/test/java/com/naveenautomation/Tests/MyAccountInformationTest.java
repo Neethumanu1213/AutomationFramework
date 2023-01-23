@@ -25,7 +25,7 @@ public class MyAccountInformationTest extends TestBase {
 	@BeforeMethod
 	public void setUp() {
 		launchBrowser(); 
-		homePage = new HomePage();
+		homePage = new HomePage(driver,true).get();
 		accountLoginPage = homePage.clickLoginLink();
 
 	}

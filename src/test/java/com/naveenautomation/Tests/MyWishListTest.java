@@ -24,7 +24,7 @@ public class MyWishListTest extends TestBase {
 	@BeforeMethod
 	public void setUp() {
 		launchBrowser();
-		homePage = new HomePage();
+		homePage = new HomePage(driver,true).get();
 		accountLoginPage = homePage.clickLoginLink();
 		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
 	}
@@ -36,6 +36,7 @@ public class MyWishListTest extends TestBase {
 		Assert.assertEquals(laptopsAndNotebooksPage.getTitleOfThePage(),
 				laptopsAndNotebooksPage.getLaptopAndNotebooksText(), "Title is not Maching");
 		laptopsAndNotebooksPage.selectTheRatingHighToLow("Rating (Highest)");
+		
 
 		laptopsAndNotebooksPage.clickSonyVAIOWishlistBtn();
 		System.out.println(laptopsAndNotebooksPage.getWishListSuccessBannerText());

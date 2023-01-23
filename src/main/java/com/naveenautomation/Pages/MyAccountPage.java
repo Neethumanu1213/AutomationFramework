@@ -1,98 +1,96 @@
 package com.naveenautomation.Pages;
 
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import com.naveenautomation.Base.TestBase;
+import com.naveenautomation.Browsers.ProxyDriver;
 
-public class MyAccountPage extends TestBase {
+public class MyAccountPage extends Page {
 
-	Actions actions = new Actions(driver);
-
-	public MyAccountPage() {
-		PageFactory.initElements(driver, this);
+	public MyAccountPage(WebDriver wd, boolean waitForPageToLoad) {
+		super(wd, waitForPageToLoad);
+		// TODO Auto-generated constructor stub
 	}
 
-	@FindBy(xpath = "//h2[text()='My Account']")
-	WebElement myAccountText;
+	Actions actions = new Actions(wd);
+	private static final String PAGE_URL="account/account";
+	
+	public static  By myAccountText=By.xpath("//h2[text()='My Account']");
+	public static  By editAccountInformationLink=By.xpath("//a[text()='Edit your account information']");
+	public static  By accountUpdatedSuccessBanner=By.cssSelector("div.alert.alert-success");
+	public static  By newsLetterUnsubscibtionLink=By.cssSelector("div#content>ul:last-of-type>li a");;
+	public static  By newsLetterSubsciptionSuccessBanner=By.cssSelector("div.alert.alert-success");;
+	public static  By logOutBtn=By.cssSelector("#column-right>div>a:last-of-type");
+	public static  By laptopsAndNotebookLink=By.xpath("//a[text()='Laptops & Notebooks']");
+	public static  By showAllLaptopsAndNotebookLink=By.xpath("//a[text()='Show All Laptops & Notebooks']");
+	public static  By addressBookLink=By.xpath("//a[text()='Address Book']");
+	
 
-	@FindBy(xpath = "//a[text()='Edit your account information']")
-	WebElement editAccountInformationLink;
-
-	@FindBy(css = "div.alert.alert-success")
-	WebElement accountUpdatedSuccessBanner;
-
-	@FindBy(css = "div#content>ul:last-of-type>li a")
-	WebElement newsLetterUnsubscibtionLink;
-
-	@FindBy(css = "div.alert.alert-success")
-	WebElement newsLetterSubsciptionSuccessBanner;
-
-	@FindBy(css = "#column-right>div>a:last-of-type")
-	WebElement logOutBtn;
-
-	@FindBy(xpath = "//a[text()='Laptops & Notebooks']")
-	WebElement laptopsAndNotebookLink;
-
-	@FindBy(xpath = "//a[text()='Show All Laptops & Notebooks']")
-	WebElement showAllLaptopsAndNotebookLink;
-
-	@FindBy(xpath = "//a[text()='Address Book']")
-	WebElement addressBookLink;
 
 	public void mouseeHoverToLaptopAndNotebooks() {
-		actions.moveToElement(laptopsAndNotebookLink).perform();
+		((ProxyDriver)wd).mouseHoverAction(wd.findElement(laptopsAndNotebookLink));
+		//actions.moveToElement(laptopsAndNotebookLink).perform();
 
 	}
 
 	public LaptopsAndNotebooksPage clickShowAllLaptopsAndNotebookLink() {
 		mouseeHoverToLaptopAndNotebooks();
-		showAllLaptopsAndNotebookLink.click();
-		return new LaptopsAndNotebooksPage();
+		((ProxyDriver)wd).click(showAllLaptopsAndNotebookLink);
+		return new LaptopsAndNotebooksPage(wd,true);
 
 	}
 
 	public String getMyAccountText() {
-		return myAccountText.getText();
+	return	((ProxyDriver)wd).getText(myAccountText, 10);
 	}
 
 	public String getTitleOfThePage() {
-		return driver.getTitle();
-
+	return	((ProxyDriver)wd).getTitle();
 	}
 
 	public MyAccountInformationPage clickEditYourInformationLink() {
-		editAccountInformationLink.click();
-		return new MyAccountInformationPage();
+		((ProxyDriver)wd).click(editAccountInformationLink);
+		return new MyAccountInformationPage(wd,true);
 
 	}
 
 	public String getAccountUpdatedSuccessText() {
-		return accountUpdatedSuccessBanner.getText();
+	return	((ProxyDriver)wd).getText(accountUpdatedSuccessBanner, 10);
 	}
 
 	public NewsLetterSubsciptionPage subsciptionOfNewsletter() {
-		newsLetterUnsubscibtionLink.click();
-		return new NewsLetterSubsciptionPage();
+		((ProxyDriver)wd).click(newsLetterUnsubscibtionLink);
+		return new NewsLetterSubsciptionPage(wd,true);
 
 	}
 
 	public String getNewsLetterSubscriptionSuccessText() {
-		return newsLetterSubsciptionSuccessBanner.getText();
-
+		return	((ProxyDriver)wd).getText(newsLetterSubsciptionSuccessBanner, 10);
 	}
 
 	public AccountLogOutPage logOut() {
-		logOutBtn.click();
-		return new AccountLogOutPage(); 
+		((ProxyDriver)wd).click(logOutBtn);
+		return new AccountLogOutPage(wd,true); 
 	}
 
 	public AddressBookPage clickAddressBookLink() {
-		addressBookLink.click();
-		return new AddressBookPage();
+		((ProxyDriver)wd).click(addressBookLink);
+		return new AddressBookPage(wd,true);
 
+	}
+	
+	@Override
+	protected void isLoaded() {
+
+		if(!urlContains(wd.getCurrentUrl())) {
+			throw new Error();
+		}
+	}
+	
+	@Override
+	protected String getPageUrl() {
+		return getDomain() + PAGE_URL;
 	}
 
 }

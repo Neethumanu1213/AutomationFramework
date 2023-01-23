@@ -1,39 +1,50 @@
 package com.naveenautomation.Pages;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import com.naveenautomation.Base.TestBase;
+import com.naveenautomation.Browsers.ProxyDriver;
 
-public class AccountLoginPage extends TestBase {
+public class AccountLoginPage extends Page {
 
-	public AccountLoginPage() {
-		PageFactory.initElements(driver, this);
+	
+
+	public AccountLoginPage(WebDriver wd, boolean waitForPageToLoad) {
+		super(wd, waitForPageToLoad);
 	}
 
-	@FindBy(id = "input-email")
-	WebElement emailInputField;
-
-	@FindBy(id = "input-password")
-	WebElement passwordInputField;
-
-	@FindBy(css = "input[type='submit']")
-	WebElement loginBtn;
+	private static final String PAGE_URL="account/login";
+	
+	public static  By emailInputField=By.id("input-email");
+	public static  By passwordInputField=By.id("input-password");
+	public static  By loginBtn=By.cssSelector("input[type='submit']");
+	
 
 	private void enterEmailIDForLogin(String email) {
-		emailInputField.sendKeys(email);
+		((ProxyDriver)wd).sendKeys(emailInputField, email);
 	}
 
 	private void enterPasswordForLogin(String password) {
-		passwordInputField.sendKeys(password);
+		((ProxyDriver)wd).sendKeys(passwordInputField, password);
 	}
 
 	public MyAccountPage clickLoginBtnForLogin(String email, String password) {
 		enterEmailIDForLogin(email);
 		enterPasswordForLogin(password);
-		loginBtn.submit();
-		return new MyAccountPage();
+		((ProxyDriver)wd).submit(loginBtn);
+		return new MyAccountPage(wd,true);
 	}
 
+	@Override
+	protected void isLoaded() {
+
+		if(!urlContains(wd.getCurrentUrl())) {
+			throw new Error();
+		}
+	}
+	
+	@Override
+	protected String getPageUrl() {
+		return getDomain() + PAGE_URL;
+	}
 }

@@ -3,41 +3,41 @@ package com.naveenautomation.Pages;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import com.naveenautomation.Base.TestBase;
+import com.naveenautomation.Browsers.ProxyDriver;
 
-public class MyWishListPage extends TestBase {
+public class MyWishListPage extends Page {
 
-	public MyWishListPage() {
-		PageFactory.initElements(driver, this);
+	
+
+	public MyWishListPage(WebDriver wd, boolean waitForPageToLoad) {
+		super(wd, waitForPageToLoad);
 	}
 
-	@FindBy(css = "tbody>tr:last-of-type>td:last-of-type>a")
-	WebElement deleteBtn;
+	private static final String PAGE_URL="account/wishlist";
+	public static  By deleteBtn = By.cssSelector("tbody>tr:last-of-type>td:last-of-type>a");
+	public static  By deleteSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
+	
 
-	@FindBy(css = "div.alert.alert-success.alert-dismissible")
-	WebElement deleteSuccessBannerText;
 
 	public String getTitleOfThePage() {
-		return driver.getTitle();
+	return	((ProxyDriver)wd).getTitle();
 	}
 
 	public void clickDeleteBtn() {
-		deleteBtn.click();
+		((ProxyDriver)wd).click(deleteBtn);
 	}
 
 	public String getDeleteSuccessBannerText() {
-		return deleteSuccessBannerText.getText();
-
+	return	((ProxyDriver)wd).getText(deleteSuccessBannerText, 10);
 	}
 
 	public WebElement getElementFromTheTable(String primaryKey, WishList column) {
 		int columnIndex = getIndexOfColumn(column);
 
-		List<WebElement> rowsInATable = driver
+		List<WebElement> rowsInATable = wd
 				.findElements(By.cssSelector("table.table.table-bordered.table-hover tbody tr"));
 		for (int i = 0; i < rowsInATable.size(); i++) {
 			List<WebElement> cells = rowsInATable.get(i).findElements(By.cssSelector("td"));
@@ -53,10 +53,11 @@ public class MyWishListPage extends TestBase {
 	public void deleteProductFromTheTable(String primaryKey, WishList column,By locator) {
 		getElementFromTheTable(primaryKey, column).findElement(locator).click();
 		
+		
 	}
 
 	private int getIndexOfColumn(WishList column) {
-		List<WebElement> headers = driver
+		List<WebElement> headers = wd
 				.findElements(By.cssSelector("table.table.table-bordered.table-hover thead tr td"));
 		
 		for (WebElement webElement : headers) {
@@ -86,6 +87,19 @@ public class MyWishListPage extends TestBase {
 			return name;
 		}
 
+	}
+	
+	@Override
+	protected void isLoaded() {
+
+		if(!urlContains(wd.getCurrentUrl())) {
+			throw new Error();
+		}
+	}
+	
+	@Override
+	protected String getPageUrl() {
+		return getDomain() + PAGE_URL;
 	}
 
 }

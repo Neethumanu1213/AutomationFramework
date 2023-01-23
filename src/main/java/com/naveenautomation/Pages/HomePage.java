@@ -1,50 +1,61 @@
 package com.naveenautomation.Pages;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import com.naveenautomation.Base.TestBase;
+import com.naveenautomation.Browsers.ProxyDriver;
 
-public class HomePage extends TestBase {
+public class HomePage extends Page {
 
-	Actions actions = new Actions(driver);
-
-	public HomePage() {
-		PageFactory.initElements(driver, this);
+	public HomePage(WebDriver wd, boolean waitForPageToLoad) {
+		super(wd, waitForPageToLoad);
 	}
 
-	@FindBy(xpath = "//a[@title='My Account']")
-	WebElement myAccountText;
+	private static final String PAGE_URL = "common/home";
 
-	@FindBy(xpath = "//a[text()='Register']")
-	WebElement registerLink;
-
-	@FindBy(xpath = "//a[text()='Login']")
-	WebElement loginLink;
+	public static  By myAccountText = By.xpath("//a[@title='My Account']");
+	public static  By registerLink = By.xpath("//a[text()='Register']");
+	public static  By loginLink = By.xpath("//a[text()='Login']");
 
 	private void clickMyAccountText() {
-		myAccountText.click();
+		((ProxyDriver) wd).click(myAccountText);
 	}
 
 	public RegisterAccountPage clickRegisterLink() {
 		clickMyAccountText();
-		registerLink.click();
-		return new RegisterAccountPage();
+		((ProxyDriver) wd).click(registerLink);
+		return new RegisterAccountPage(wd, true);
 
 	}
 
 	public AccountLoginPage clickLoginLink() {
 		clickMyAccountText();
-		loginLink.click();
-		return new AccountLoginPage();
+		((ProxyDriver) wd).click(loginLink);
+		return new AccountLoginPage(wd, true);
 
 	}
 
 	public String getTitleOfHomePage() {
-		return driver.getTitle();
+		return ((ProxyDriver) wd).getTitle();
 
 	}
 
+	@Override
+	protected void isLoaded() {
+
+		if (!urlContains(wd.getCurrentUrl())) {
+			throw new Error();
+		}
+	}
+
+	@Override
+	protected String getPageUrl() {
+		return getDomain() + PAGE_URL;
+	}
+
+	@Override
+	public HomePage get() {
+		// TODO Auto-generated method stub
+		return (HomePage) super.get();
+	}
 }

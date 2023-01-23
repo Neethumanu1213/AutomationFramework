@@ -16,7 +16,7 @@ public class AccountCreatedTest extends TestBase {
 	@BeforeMethod
 	public void setUp() {
 		launchBrowser();
-		homePage = new HomePage();
+		homePage = new HomePage(driver,true);
 	}
 
 	@Test
@@ -24,7 +24,7 @@ public class AccountCreatedTest extends TestBase {
 
 		RegisterAccountPage registerAccountPage = homePage.clickRegisterLink();
 		AccountCreatedPage accountCreatedPage = registerAccountPage.ClickContinueBtnForSignUp("Neethu", "Manu",
-				"neethu129@gmail.com", "1234567890", "password@01", "password@01");
+				"neethu130@gmail.com", "1234567890", "password@01", "password@01");
 		Assert.assertEquals(accountCreatedPage.getAccountCreatedSuccessText(), "Your Account Has Been Created!",
 				"Account is not created ");
 

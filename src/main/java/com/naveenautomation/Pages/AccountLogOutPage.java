@@ -1,34 +1,47 @@
 package com.naveenautomation.Pages;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import com.naveenautomation.Base.TestBase;
+import com.naveenautomation.Browsers.ProxyDriver;
 
-public class AccountLogOutPage extends TestBase {
+public class AccountLogOutPage extends Page {
 
-	public AccountLogOutPage() {
-		PageFactory.initElements(driver, this);
+	public AccountLogOutPage(WebDriver wd, boolean waitForPageToLoad) {
+		super(wd, waitForPageToLoad);
+
 	}
 
-	@FindBy(css = "#content>h1")
-	WebElement accountLogOutText;
+	private static final String PAGE_URL = "account/logout";
 
-	@FindBy(xpath = "//a[text()='Continue']")
-	WebElement continueBtn;
+	public static By accountLogOutText = By.cssSelector("#content>h1");
+	public static By continueBtn = By.xpath("//a[text()='Continue']");
 
 	public String getAccountLogOutText() {
-		return accountLogOutText.getText();
-		
+		return ((ProxyDriver) wd).getText(accountLogOutText, 10);
+
 	}
+
 	public String getTitleOfAccountLogOutPage() {
-		return driver.getTitle();
-		
+		return ((ProxyDriver) wd).getTitle();
+
 	}
-	
+
 	public HomePage logOut() {
-		continueBtn.click();
-		return new HomePage();
+		((ProxyDriver) wd).click(continueBtn);
+		return new HomePage(wd, true);
+	}
+
+	@Override
+	protected void isLoaded() {
+
+		if (!urlContains(wd.getCurrentUrl())) {
+			throw new Error();
+		}
+	}
+
+	@Override
+	protected String getPageUrl() {
+		return getDomain() + PAGE_URL;
 	}
 }

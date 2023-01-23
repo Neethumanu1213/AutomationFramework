@@ -20,7 +20,7 @@ public class HomePageTest extends TestBase {
 	@BeforeMethod
 	public void setUp() {
 		launchBrowser();
-		homePage = new HomePage();
+		homePage = new HomePage(driver,true).get();
 		accountLoginPage = homePage.clickLoginLink();
 		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
 	}

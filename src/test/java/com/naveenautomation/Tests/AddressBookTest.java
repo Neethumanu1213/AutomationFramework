@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import com.naveenautomation.Base.TestBase;
 import com.naveenautomation.Pages.AccountLoginPage;
 import com.naveenautomation.Pages.AddressBookPage;
-import com.naveenautomation.Pages.EditAddressPage;
 import com.naveenautomation.Pages.HomePage;
 import com.naveenautomation.Pages.MyAccountPage;
 
@@ -20,7 +19,7 @@ public class AddressBookTest extends TestBase {
 	@BeforeMethod
 	public void setUp() {
 		launchBrowser();
-		homePage = new HomePage();
+		homePage = new HomePage(driver,true).get();
 		accountLoginPage = homePage.clickLoginLink();
 		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
 	}
@@ -29,26 +28,22 @@ public class AddressBookTest extends TestBase {
 	public void verifyTheAddressIsDeleted() {
 
 		AddressBookPage addressBookPage = myAccountPage.clickAddressBookLink();
-		EditAddressPage editAddressPage = addressBookPage.clickEditAddressbook("Ab765c");
-		addressBookPage = editAddressPage.clickContinueBtn("Nibha", "Canada", "Ontario");
+		 addressBookPage.clickContinueBtn("Ab765c","Sankar", "Canada", "Ontario");
 		System.out.println(addressBookPage.getEditSuccessBannerText());
 		Assert.assertEquals(addressBookPage.getEditSuccessBannerText(), "Your address has been successfully updated",
 				"Not able to edit");
 
-		addressBookPage.clickDeleteAddressbook("N2x09v");
+
+		addressBookPage.clickDeleteAddressbook("N2c009");
 		Assert.assertEquals(addressBookPage.getDeleteSuccessBannerText(), "Your address has been successfully deleted",
 				"Address is not deleted");
 
-		editAddressPage = addressBookPage.clickEditAddressbook("C2C012");
-		addressBookPage = editAddressPage.clickContinueBtn("Sankar", "Canada", "Ontario");
-		System.out.println(addressBookPage.getEditSuccessBannerText());
-		Assert.assertEquals(addressBookPage.getEditSuccessBannerText(), "Your address has been successfully updated",
-				"Not able to edit");
+		
 
 	}
 
 	@AfterMethod
 	public void tearDown() {
-		quitBrowser();
+	//	quitBrowser();
 	}
 }

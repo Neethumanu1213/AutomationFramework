@@ -1,70 +1,59 @@
 package com.naveenautomation.Pages;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import com.naveenautomation.Base.TestBase;
+import com.naveenautomation.Browsers.ProxyDriver;
 
-public class RegisterAccountPage extends TestBase {
+public class RegisterAccountPage extends Page {
 
-	public RegisterAccountPage() {
-		PageFactory.initElements(driver, this);
+	
+
+	public RegisterAccountPage(WebDriver wd, boolean waitForPageToLoad) {
+		super(wd, waitForPageToLoad);
+
 	}
+	private static final String PAGE_URL="account/register";
+	
+	public static  By firstNameInputField=By.cssSelector("#input-firstname");
+	public static  By lastNameInputField=By.cssSelector("#input-lastname");
+	public static  By emailInputField=By.cssSelector("#input-email");
+	public static  By telePhoneInputField=By.cssSelector("#input-telephone");
+	public static  By passwordInputField=By.cssSelector("#input-password");
+	public static  By confirmPasswordInputField=By.cssSelector("#input-confirm");
+	public static  By privacyPolicyCheckBox=By.cssSelector("input[type='checkbox']");
+	public static  By continueBtn=By.cssSelector("input[type='checkbox']");
 
-	@FindBy(css = "#input-firstname")
-	WebElement firstNameInputField;
-
-	@FindBy(css = "#input-lastname")
-	WebElement lastNameInputField;
-
-	@FindBy(css = "#input-email")
-	WebElement emailInputField;
-
-	@FindBy(css = "#input-telephone")
-	WebElement telePhoneInputField;
-
-	@FindBy(css = "#input-password")
-	WebElement passwordInputField;
-
-	@FindBy(css = "#input-confirm")
-	WebElement confirmPasswordInputField;
-
-	@FindBy(css = "input[type='checkbox']")
-	WebElement privacyPolicyCheckBox;
-
-	@FindBy(css = "input[type='submit']")
-	WebElement continueBtn;
 
 	private void enterFirstName(String firstName) {
-		firstNameInputField.sendKeys(firstName);
+		((ProxyDriver)wd).sendKeys(firstNameInputField, firstName);
 
 	}
 
 	private void enterLastName(String LastName) {
-		lastNameInputField.sendKeys(LastName);
+		((ProxyDriver)wd).sendKeys(lastNameInputField, LastName);
 
 	}
 
 	private void enterEmail(String emailID) {
-		emailInputField.sendKeys(emailID);
+		((ProxyDriver)wd).sendKeys(emailInputField, emailID);
 
 	}
 
 	private void enterTelephone(String phoneNumber) {
-		telePhoneInputField.sendKeys(phoneNumber);
+		((ProxyDriver)wd).sendKeys(telePhoneInputField, phoneNumber);
 	}
 
 	private void enterPassword(String password) {
-		passwordInputField.sendKeys(password);
+		((ProxyDriver)wd).sendKeys(passwordInputField, password);
 	}
 
 	private void enterConfirmPassword(String confirmPassword) {
-		confirmPasswordInputField.sendKeys(confirmPassword);
+		((ProxyDriver)wd).sendKeys(confirmPasswordInputField, confirmPassword);
 	}
 
 	private void clickPrivacyPolicyCheckBox() {
-		privacyPolicyCheckBox.click();
+		((ProxyDriver)wd).click(privacyPolicyCheckBox);
 	}
 
 	public AccountCreatedPage ClickContinueBtnForSignUp(String firstName, String lastName, String emailID,
@@ -76,9 +65,22 @@ public class RegisterAccountPage extends TestBase {
 		enterPassword(confirmPassword);
 		enterConfirmPassword(confirmPassword);
 		clickPrivacyPolicyCheckBox();
-		continueBtn.submit();
-		return new AccountCreatedPage();
+		((ProxyDriver)wd).submit(continueBtn);
+		return new AccountCreatedPage(wd,true);
 
+	}
+	
+	@Override
+	protected void isLoaded() {
+
+		if(!urlContains(wd.getCurrentUrl())) {
+			throw new Error();
+		}
+	}
+	
+	@Override
+	protected String getPageUrl() {
+		return getDomain() + PAGE_URL;
 	}
 
 }
