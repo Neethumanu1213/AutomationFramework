@@ -13,7 +13,7 @@ public class HomePage extends Page {
 
 	private static final String PAGE_URL = "common/home";
 
-	public static  By myAccountText = By.xpath("//a[@title='My Account']");
+	public static  By myAccountText = By.cssSelector("#top-links>ul>li:nth-of-type(2)>a");
 	public static  By registerLink = By.xpath("//a[text()='Register']");
 	public static  By loginLink = By.xpath("//a[text()='Login']");
 

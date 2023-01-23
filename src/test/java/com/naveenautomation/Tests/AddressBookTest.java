@@ -24,7 +24,7 @@ public class AddressBookTest extends TestBase {
 		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
 	}
 
-	@Test
+	@Test 
 	public void verifyTheAddressIsDeleted() {
 
 		AddressBookPage addressBookPage = myAccountPage.clickAddressBookLink();
