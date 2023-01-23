@@ -44,6 +44,6 @@ public class AddressBookTest extends TestBase {
 
 	@AfterMethod
 	public void tearDown() {
-	//	quitBrowser();
+		quitBrowser();
 	}
 }
