@@ -1,9 +1,9 @@
 package com.naveenautomation.Tests;
 
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.naveenautomation.Base.TestBase;
 import com.naveenautomation.Pages.AccountLoginPage;
@@ -17,6 +17,7 @@ public class MyAccountTest extends TestBase {
 	HomePage homePage;
 	AccountLoginPage accountLoginPage;
 	MyAccountPage myAccountPage;
+	SoftAssert sfAssert = new SoftAssert();
 
 	@BeforeMethod
 	public void setUp() {
@@ -28,26 +29,27 @@ public class MyAccountTest extends TestBase {
 
 	@Test
 	public void verifyUserIsAbleToLoginSuccesfully() {
-		Assert.assertEquals(myAccountPage.getMyAccountText(), "My Account", "Login failed");
+		sfAssert.assertEquals(myAccountPage.getMyAccountText(), "My Account", "Login failed");
+		sfAssert.assertAll();
 	}
-	
 
 	@Test
 	public void verifySuccessBannerForPhoneNumberUpdate() {
 		MyAccountInformationPage myAccountInformationPage = myAccountPage.clickEditYourInformationLink();
 		myAccountInformationPage.clickContinueAfterUpdatingPhoneNumber("9876543210");
-		Assert.assertEquals(myAccountPage.getAccountUpdatedSuccessText(),
+		sfAssert.assertEquals(myAccountPage.getAccountUpdatedSuccessText(),
 				"Success: Your account has been successfully updated.", "Phone number is not updated");
 
+		sfAssert.assertAll();
 	}
 
 	@Test
 	public void verifySuccessBannerForNewsLetterSusciption() {
 		NewsLetterSubsciptionPage newsLetterSubsciptionPage = myAccountPage.subsciptionOfNewsletter();
 		newsLetterSubsciptionPage.updatingSubscription();
-		Assert.assertEquals(myAccountPage.getAccountUpdatedSuccessText(),
+		sfAssert.assertEquals(myAccountPage.getAccountUpdatedSuccessText(),
 				"Success: Your newsletter subscription has been successfully updated!", "Subscription is not updated");
-
+		sfAssert.assertAll();
 	}
 
 	@AfterMethod
