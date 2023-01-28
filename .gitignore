@@ -1,0 +1,11 @@
+/target/
+*.classpath
+/test-output/
+*.project
+/Extent Report/
+/FailedTestScreenShots/
+/Logs/
+*.settings
+
+
+
