@@ -23,12 +23,12 @@ public class AccountLogOutTest extends TestBase {
 		launchBrowser();
 		homePage = new HomePage(driver, true).get();
 		accountLoginPage = homePage.clickLoginLink();
-		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
+		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu1234@gmail.com", "password@01");
 	}
 
 	@Test
 	public void verifyTitleOfThePage() {
-		AccountLogOutPage accountLogOutPage = myAccountPage.logOut();
+		AccountLogOutPage accountLogOutPage = myAccountPage.logOut().get();
 		sfAssert.assertEquals(accountLogOutPage.getAccountLogOutText(), accountLogOutPage.getTitleOfAccountLogOutPage(),
 				"Title is not matched");
 

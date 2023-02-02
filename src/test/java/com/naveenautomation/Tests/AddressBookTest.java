@@ -22,13 +22,13 @@ public class AddressBookTest extends TestBase {
 		launchBrowser();
 		homePage = new HomePage(driver, true).get();
 		accountLoginPage = homePage.clickLoginLink();
-		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
+		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu1234@gmail.com", "password@01");
 	}
 
 	@Test(enabled=false)
 	public void verifyTheAddressIsDeleted() {
 
-		AddressBookPage addressBookPage = myAccountPage.clickAddressBookLink();
+		AddressBookPage addressBookPage = myAccountPage.clickAddressBookLink().get();
 		addressBookPage.clickContinueBtn("Ab765c", "Sankar", "Canada", "Ontario");
 		System.out.println(addressBookPage.getEditSuccessBannerText());
 		sfAssert.assertEquals(addressBookPage.getEditSuccessBannerText(), "Your address has been successfully updated",

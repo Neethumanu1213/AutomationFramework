@@ -17,12 +17,12 @@ public class AddressBookPage extends Page {
 
 	private static final String PAGE_URL = "account/address";
 
-	public static By lastNameInputField = By.id("input-lastname");
-	public static By countryInputField = By.id("input-country");
-	public static By regionInputField = By.id("input-zone");
-	public static By continueBtn = By.cssSelector("input[type='Submit']");
-	public static By editSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
-	public static By deleteSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
+	private static By lastNameInputField = By.id("input-lastname");
+	private static By countryInputField = By.id("input-country");
+	private static By regionInputField = By.id("input-zone");
+	private static By continueBtn = By.cssSelector("input[type='Submit']");
+	private static By editSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
+	private static By deleteSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
 
 	private void editLastNameField(String lName) {
 		((ProxyDriver) wd).clear(lastNameInputField);
@@ -80,13 +80,10 @@ public class AddressBookPage extends Page {
 
 	public void clickDeleteAddressbook(String primaryKey) {
 		WebElement editElementinCell = getElemntFromTable(primaryKey);
-		WebElement delete=editElementinCell.findElement(By.cssSelector("a:last-of-type"));
+		WebElement delete = editElementinCell.findElement(By.cssSelector("a:last-of-type"));
 		delete.click();
-	
-		//wd.switchTo().alert().accept();
-		((ProxyDriver)wd).switchTo();
-        
-		((ProxyDriver)wd).acceptAlert();
+		((ProxyDriver) wd).switchTo();
+		((ProxyDriver) wd).acceptAlert();
 	}
 
 	@Override
@@ -100,5 +97,10 @@ public class AddressBookPage extends Page {
 	@Override
 	protected String getPageUrl() {
 		return getDomain() + PAGE_URL;
+	}
+
+	@Override
+	public AddressBookPage get() {
+		return (AddressBookPage) super.get();
 	}
 }

@@ -13,9 +13,9 @@ public class HomePage extends Page {
 
 	private static final String PAGE_URL = "common/home";
 
-	public static  By myAccountText = By.cssSelector("#top-links>ul>li:nth-of-type(2)>a");
-	public static  By registerLink = By.xpath("//a[text()='Register']");
-	public static  By loginLink = By.xpath("//a[text()='Login']");
+	private static  By myAccountText = By.cssSelector("#top-links>ul>li:nth-of-type(2)>a");
+	private static  By registerLink = By.xpath("//a[text()='Register']");
+	private static  By loginLink = By.xpath("//a[text()='Login']");
 
 	private void clickMyAccountText() {
 		((ProxyDriver) wd).click(myAccountText);
@@ -55,7 +55,6 @@ public class HomePage extends Page {
 
 	@Override
 	public HomePage get() {
-		// TODO Auto-generated method stub
 		return (HomePage) super.get();
 	}
 }

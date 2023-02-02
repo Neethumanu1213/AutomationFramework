@@ -24,7 +24,7 @@ public class MyAccountTest extends TestBase {
 		launchBrowser();
 		homePage = new HomePage(driver, true).get();
 		accountLoginPage = homePage.clickLoginLink();
-		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
+		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu1234@gmail.com", "password@01").get();
 	}
 
 	@Test
@@ -35,7 +35,7 @@ public class MyAccountTest extends TestBase {
 
 	@Test
 	public void verifySuccessBannerForPhoneNumberUpdate() {
-		MyAccountInformationPage myAccountInformationPage = myAccountPage.clickEditYourInformationLink();
+		MyAccountInformationPage myAccountInformationPage = myAccountPage.clickEditYourInformationLink().get();
 		myAccountInformationPage.clickContinueAfterUpdatingPhoneNumber("9876543210");
 		sfAssert.assertEquals(myAccountPage.getAccountUpdatedSuccessText(),
 				"Success: Your account has been successfully updated.", "Phone number is not updated");
@@ -45,7 +45,7 @@ public class MyAccountTest extends TestBase {
 
 	@Test
 	public void verifySuccessBannerForNewsLetterSusciption() {
-		NewsLetterSubsciptionPage newsLetterSubsciptionPage = myAccountPage.subsciptionOfNewsletter();
+		NewsLetterSubsciptionPage newsLetterSubsciptionPage = myAccountPage.subsciptionOfNewsletter().get();
 		newsLetterSubsciptionPage.updatingSubscription();
 		sfAssert.assertEquals(myAccountPage.getAccountUpdatedSuccessText(),
 				"Success: Your newsletter subscription has been successfully updated!", "Subscription is not updated");

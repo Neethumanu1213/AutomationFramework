@@ -22,13 +22,13 @@ public class HomePageTest extends TestBase {
 	public void setUp() {
 		launchBrowser();
 		homePage = new HomePage(driver, true).get();
-		accountLoginPage = homePage.clickLoginLink();
-		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
+		accountLoginPage = homePage.clickLoginLink().get();
+		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu1234@gmail.com", "password@01").get();
 	}
 
 	@Test
 	public void verifyLogOutSuccessfully() {
-		AccountLogOutPage accountLogOutPage = myAccountPage.logOut();
+		AccountLogOutPage accountLogOutPage = myAccountPage.logOut().get();
 		accountLogOutPage.logOut();
 		sfAssert.assertEquals(homePage.getTitleOfHomePage(), "Your Store", "Userlogout failed");
 

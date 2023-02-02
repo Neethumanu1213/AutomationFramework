@@ -15,9 +15,9 @@ public class AccountLoginPage extends Page {
 
 	private static final String PAGE_URL="account/login";
 	
-	public static  By emailInputField=By.id("input-email");
-	public static  By passwordInputField=By.id("input-password");
-	public static  By loginBtn=By.cssSelector("input[type='submit']");
+	private static  By emailInputField=By.id("input-email");
+	private static  By passwordInputField=By.id("input-password");
+	private static  By loginBtn=By.cssSelector("input[type='submit']");
 	
 
 	private void enterEmailIDForLogin(String email) {
@@ -46,5 +46,10 @@ public class AccountLoginPage extends Page {
 	@Override
 	protected String getPageUrl() {
 		return getDomain() + PAGE_URL;
+	}
+	
+	@Override
+	public AccountLoginPage get() {
+		return (AccountLoginPage) super.get();
 	}
 }

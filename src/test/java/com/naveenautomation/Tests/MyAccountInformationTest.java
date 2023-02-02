@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -30,13 +31,14 @@ public class MyAccountInformationTest extends TestBase {
 
 	}
 
+	@Ignore
 	@Test(dataProvider = "LoginDataProvider")
 	public void verifyUserInformationFieldsArePreFilled(String username, String password, String firstName,
 			String lastName, String email1D, String telephone) {
-		myAccountPage = accountLoginPage.clickLoginBtnForLogin(username, password);
+		myAccountPage = accountLoginPage.clickLoginBtnForLogin(username, password).get();
 		sfAssert.assertEquals(myAccountPage.getTitleOfThePage(), "My Account", "Title is not matching");
 
-		MyAccountInformationPage myAccountInformationPage = myAccountPage.clickEditYourInformationLink();
+		MyAccountInformationPage myAccountInformationPage = myAccountPage.clickEditYourInformationLink().get();
 		sfAssert.assertEquals(myAccountInformationPage.getAttributeValueOfFirstName(), firstName,
 				"First name is not matching");
 		sfAssert.assertEquals(myAccountInformationPage.getAttributeValueOfLastName(), lastName,

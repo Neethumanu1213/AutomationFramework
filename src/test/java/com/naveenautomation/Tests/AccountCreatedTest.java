@@ -28,7 +28,7 @@ public class AccountCreatedTest extends TestBase {
 
 		RegisterAccountPage registerAccountPage = homePage.clickRegisterLink();
 		AccountCreatedPage accountCreatedPage = registerAccountPage.ClickContinueBtnForSignUp("Neethu", "Manu",
-				Utils.getRandomEmail(), "1234567890", "password@01", "password@01");
+				Utils.getRandomEmail(), "1234567890", "password@01", "password@01").get();
 		sfAssert.assertEquals(accountCreatedPage.getAccountCreatedSuccessText(), "Your Account Has Been Created!",
 				"Account is not created ");
 		sfAssert.assertAll();

@@ -10,28 +10,24 @@ import com.naveenautomation.Browsers.ProxyDriver;
 
 public class MyWishListPage extends Page {
 
-	
-
 	public MyWishListPage(WebDriver wd, boolean waitForPageToLoad) {
 		super(wd, waitForPageToLoad);
 	}
 
-	private static final String PAGE_URL="account/wishlist";
-	public static  By deleteBtn = By.cssSelector("tbody>tr:last-of-type>td:last-of-type>a");
-	public static  By deleteSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
-	
-
+	private static final String PAGE_URL = "account/wishlist";
+	private static By deleteBtn = By.cssSelector("tbody>tr:last-of-type>td:last-of-type>a");
+	private static By deleteSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
 
 	public String getTitleOfThePage() {
-	return	((ProxyDriver)wd).getTitle();
+		return ((ProxyDriver) wd).getTitle();
 	}
 
 	public void clickDeleteBtn() {
-		((ProxyDriver)wd).click(deleteBtn);
+		((ProxyDriver) wd).click(deleteBtn);
 	}
 
 	public String getDeleteSuccessBannerText() {
-	return	((ProxyDriver)wd).getText(deleteSuccessBannerText, 10);
+		return ((ProxyDriver) wd).getText(deleteSuccessBannerText, 10);
 	}
 
 	public WebElement getElementFromTheTable(String primaryKey, WishList column) {
@@ -49,17 +45,16 @@ public class MyWishListPage extends Page {
 		return null;
 
 	}
-	
-	public void deleteProductFromTheTable(String primaryKey, WishList column,By locator) {
+
+	public void deleteProductFromTheTable(String primaryKey, WishList column, By locator) {
 		getElementFromTheTable(primaryKey, column).findElement(locator).click();
-		
-		
+
 	}
 
 	private int getIndexOfColumn(WishList column) {
 		List<WebElement> headers = wd
 				.findElements(By.cssSelector("table.table.table-bordered.table-hover thead tr td"));
-		
+
 		for (WebElement webElement : headers) {
 			String headerText = webElement.getText();
 			if (headerText.equals(column.getName())) {
@@ -70,12 +65,8 @@ public class MyWishListPage extends Page {
 	}
 
 	public enum WishList {
-		IMAGE("Image"), 
-		PRODUCT_NAME("Product Name"), 
-		MODEL("Model"), 
-		STOCK("Stock"), 
-		UNIT_PRICE("Unit Price"),
-		ACTION("Action"); 
+		IMAGE("Image"), PRODUCT_NAME("Product Name"), MODEL("Model"), STOCK("Stock"), UNIT_PRICE("Unit Price"),
+		ACTION("Action");
 
 		String name;
 
@@ -88,18 +79,23 @@ public class MyWishListPage extends Page {
 		}
 
 	}
-	
+
 	@Override
 	protected void isLoaded() {
 
-		if(!urlContains(wd.getCurrentUrl())) {
+		if (!urlContains(wd.getCurrentUrl())) {
 			throw new Error();
 		}
 	}
-	
+
 	@Override
 	protected String getPageUrl() {
 		return getDomain() + PAGE_URL;
+	}
+
+	@Override
+	public MyWishListPage get() {
+		return (MyWishListPage) super.get();
 	}
 
 }

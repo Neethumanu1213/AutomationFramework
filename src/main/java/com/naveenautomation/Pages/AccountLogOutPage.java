@@ -14,8 +14,8 @@ public class AccountLogOutPage extends Page {
 
 	private static final String PAGE_URL = "account/logout";
 
-	public static By accountLogOutText = By.cssSelector("#content>h1");
-	public static By continueBtn = By.xpath("//a[text()='Continue']");
+	private static By accountLogOutText = By.cssSelector("#content>h1");
+	private static By continueBtn = By.xpath("//a[text()='Continue']");
 
 	public String getAccountLogOutText() {
 		return ((ProxyDriver) wd).getText(accountLogOutText, 10);
@@ -43,5 +43,10 @@ public class AccountLogOutPage extends Page {
 	@Override
 	protected String getPageUrl() {
 		return getDomain() + PAGE_URL;
+	}
+
+	@Override
+	public AccountLogOutPage get() {
+		return (AccountLogOutPage) super.get();
 	}
 }

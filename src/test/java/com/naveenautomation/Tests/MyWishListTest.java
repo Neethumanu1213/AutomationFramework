@@ -27,13 +27,13 @@ public class MyWishListTest extends TestBase {
 		launchBrowser();
 		homePage = new HomePage(driver, true).get();
 		accountLoginPage = homePage.clickLoginLink();
-		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu123@gmail.com", "password@01");
+		myAccountPage = accountLoginPage.clickLoginBtnForLogin("neethu1234@gmail.com", "password@01").get();
 	}
 
 	@Test
 	public void verifyTheItemIsRemoved() {
 
-		LaptopsAndNotebooksPage laptopsAndNotebooksPage = myAccountPage.clickShowAllLaptopsAndNotebookLink();
+		LaptopsAndNotebooksPage laptopsAndNotebooksPage = myAccountPage.clickShowAllLaptopsAndNotebookLink().get();
 		sfAssert.assertEquals(laptopsAndNotebooksPage.getTitleOfThePage(),
 				laptopsAndNotebooksPage.getLaptopAndNotebooksText(), "Title is not Maching");
 		laptopsAndNotebooksPage.selectTheRatingHighToLow("Rating (Highest)");
@@ -51,7 +51,7 @@ public class MyWishListTest extends TestBase {
 		sfAssert.assertEquals(laptopsAndNotebooksPage.getWishListSuccessBannerText(),
 				"Success: You have added MacBook Air to your wish list!\n×", "Item is not added to the wishList");
 
-		MyWishListPage myWishListPage = laptopsAndNotebooksPage.clickingWishListLink();
+		MyWishListPage myWishListPage = laptopsAndNotebooksPage.clickingWishListLink().get();
 		sfAssert.assertEquals(myWishListPage.getTitleOfThePage(), "My Wish List", "Title is not matching");
 
 		WebElement macBookAirPrice = myWishListPage.getElementFromTheTable("MacBook Air", WishList.UNIT_PRICE);

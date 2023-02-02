@@ -16,16 +16,16 @@ public class LaptopsAndNotebooksPage extends Page {
 
 	private static final String PAGE_URL = "product/category&path=18";
 
-	public static By laptopAndNoteBookText = By.cssSelector("div#content>h2");
-	public static By sortByBtn = By.cssSelector("#input-sort");
-	public static By sonyVAIOWishListBtn = By.cssSelector(
+	private static By laptopAndNoteBookText = By.cssSelector("div#content>h2");
+	private static By sortByBtn = By.cssSelector("#input-sort");
+	private static By sonyVAIOWishListBtn = By.cssSelector(
 			"div.product-layout:nth-of-type(1) div.product-thumb:first-of-type>div:last-of-type>div>button:nth-of-type(2)");
-	public static By macBookProWishListBtn = By.cssSelector(
+	private static By macBookProWishListBtn = By.cssSelector(
 			"div.product-layout:nth-of-type(2) div.product-thumb:first-of-type>div:last-of-type>div>button:nth-of-type(2)");
-	public static By macBookAirWishListBtn = By.cssSelector(
+	private static By macBookAirWishListBtn = By.cssSelector(
 			"div.product-layout:nth-of-type(3) div.product-thumb:first-of-type>div:last-of-type>div>button:nth-of-type(2)");
-	public static By wishListSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
-	public static By wishListLink = By.cssSelector("#wishlist-total");
+	private static By wishListSuccessBannerText = By.cssSelector("div.alert.alert-success.alert-dismissible");
+	private static By wishListLink = By.cssSelector("#wishlist-total");
 
 	public String getTitleOfThePage() {
 		return ((ProxyDriver) wd).getTitle();
@@ -39,11 +39,6 @@ public class LaptopsAndNotebooksPage extends Page {
 		((ProxyDriver) wd).click(sortByBtn);
 
 	}
-//
-//	private void selectRatingByVisibleText(String text) {
-//		Select select = new Select(wd.findElement(sortByBtn));
-//		select.selectByVisibleText(text);// Rating (Highest)
-//	}
 
 	public void clickSonyVAIOWishlistBtn() {
 		wd.navigate().refresh();
@@ -69,14 +64,13 @@ public class LaptopsAndNotebooksPage extends Page {
 	}
 
 	public void selectTheRatingHighToLow(String text) {
-		//clickSortByBtn();
+		clickSortByBtn();
 		((ProxyDriver) wd).selectFromDropDown(sortByBtn, text);
-		// selectRatingByVisibleText(text);
+
 	}
 
 	public MyWishListPage clickingWishListLink() {
 		((ProxyDriver) wd).navigate().refresh();
-		// wd.navigate().refresh();
 		((ProxyDriver) wd).click(wishListLink);
 		return new MyWishListPage(wd, true);
 
@@ -93,5 +87,10 @@ public class LaptopsAndNotebooksPage extends Page {
 	@Override
 	protected String getPageUrl() {
 		return getDomain() + PAGE_URL;
+	}
+
+	@Override
+	public LaptopsAndNotebooksPage get() {
+		return (LaptopsAndNotebooksPage) super.get();
 	}
 }
